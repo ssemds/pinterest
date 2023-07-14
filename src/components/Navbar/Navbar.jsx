@@ -4,11 +4,25 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import logo from "../img/logoPRINT.jpg";
+import profile from "../img/profile.png";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../Contexts/AuthContextProvider";
+import { useEffect } from "react";
+
 function BasicExample() {
+  const navigate = useNavigate();
+  const { currentUser, logout, checkAuth } = useAuth();
+
+  useEffect(() => {
+    if (localStorage.getItem("tokens")) {
+      checkAuth();
+    }
+  }, []);
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <img src={logo} alt="" width={70} height={35} />
+        <img src={logo} alt="" width={50} height={25} />
         {/* <Navbar.Brand href="#home">Pinterest</Navbar.Brand> */}
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -36,7 +50,26 @@ function BasicExample() {
             />
             <Button variant="outline-success">Search</Button>
           </Form>
+
+          <NavDropdown
+            title={<img src={profile} alt="" width={70} height={35} />}
+            id="basic-nav-dropdown"
+            align="end"
+            style={{ marginLeft: "10px" }}
+          >
+            <NavDropdown.Item onClick={() => navigate("/login")}>
+              Login
+            </NavDropdown.Item>
+            <NavDropdown.Item onClick={() => navigate("/register")}>
+              Register
+            </NavDropdown.Item>
+            <NavDropdown.Divider />
+            <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
+          </NavDropdown>
         </Navbar.Collapse>
+        <Nav.Link href="#" disabled>
+          {currentUser ? currentUser : "No auth user"}
+        </Nav.Link>
       </Container>
     </Navbar>
   );
