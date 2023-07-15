@@ -56,7 +56,7 @@ const AuthContextProvider = ({ children }) => {
       });
       localStorage.setItem(
         "tokens",
-        JSON.stringify({ access: res.data.access, refresh: tokens.refresh })
+        JSON.stringify({ access: res.data.access, refresh: res.data.refresh })
       );
       const email = localStorage.getItem("email");
       setCurrentUser(email);
