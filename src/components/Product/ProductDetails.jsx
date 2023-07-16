@@ -11,6 +11,7 @@ const ProductDetails = () => {
   return (
     <div>
       <div>
+        <h1>{onePost.title}</h1>
         <p>{onePost.category_name}</p>
       </div>
     </div>
