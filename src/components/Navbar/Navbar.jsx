@@ -30,13 +30,11 @@ function BasicExample() {
             <Nav.Link href="#home">Главная</Nav.Link>
 
             <NavDropdown title="Создать" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">
+              {/* <NavDropdown.Item href=" ">
                 Создать пин-идею
-              </NavDropdown.Item>
+              </NavDropdown.Item> */}
 
-              <NavDropdown.Item href="#action/3.3">
-                Создать пин
-              </NavDropdown.Item>
+              <NavDropdown.Item href="/add">Создать пин</NavDropdown.Item>
               <NavDropdown.Divider />
             </NavDropdown>
           </Nav>
