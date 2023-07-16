@@ -4,12 +4,12 @@ import React, { createContext, useContext, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import { API } from "../helpers/const";
 import { getTokens } from "../helpers/functions";
-
+import { toast } from "react-toastify";
 export const productContext = createContext();
 export const useProduct = () => useContext(productContext);
 
 const INIT_STATE = {
-  products: [],
+  posts: [],
   //   pages: 0,
   categories: [],
   oneProduct: null,
@@ -36,7 +36,8 @@ function reducer(state = INIT_STATE, action) {
 const ProductContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, INIT_STATE);
   const navigate = useNavigate();
-
+  const notify = (message) =>
+    toast.error(message.toString(), { theme: "dark" });
   async function getPosts() {
     try {
       const res = await axios(
@@ -45,7 +46,7 @@ const ProductContextProvider = ({ children }) => {
       );
       dispatch({ type: "GET_POSTS", payload: res.data });
     } catch (error) {
-      console.log(error);
+      notify(error.response?.data.detail || error);
     }
   }
 
@@ -54,17 +55,17 @@ const ProductContextProvider = ({ children }) => {
       const res = await axios(`${API}/categories/`);
       dispatch({ type: "GET_CATEGORIES", payload: res.data });
     } catch (error) {
-      console.log(error);
+      notify(error.response?.data.detail || error);
     }
   }
 
   async function createPost(newPost) {
     try {
-      await axios.post(`${API}/posts/`, newPost, getTokens());
-      console.log(newPost);
-      navigate("/products");
+      let res = await axios.post(`${API}/posts/`, newPost, getTokens());
+      console.log(res);
+      navigate("/posts");
     } catch (error) {
-      console.log(error);
+      notify(error.response?.data.detail || error);
     }
   }
 
@@ -73,7 +74,7 @@ const ProductContextProvider = ({ children }) => {
       await axios.delete(`${API}/posts/${id}/`, getTokens());
       getPosts();
     } catch (error) {
-      console.log(error);
+      notify(error.response?.data.detail || error);
     }
   }
 
@@ -82,16 +83,16 @@ const ProductContextProvider = ({ children }) => {
       const res = await axios(`${API}/posts/${id}/`, getTokens());
       dispatch({ type: "GET_ONE_POST", payload: res.data });
     } catch (error) {
-      console.log(error);
+      notify(error.response?.data.detail || error);
     }
   }
 
   async function updatePost(id, editedPost) {
     try {
       await axios.patch(`${API}/posts/${id}/`, editedPost, getTokens());
-      navigate("/products");
+      navigate("/posts");
     } catch (error) {
-      console.log(error);
+      notify(error.response?.data.detail || error);
     }
   }
   const values = {

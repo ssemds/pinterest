@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { createContext, useContext, useState } from "react";
 import { API } from "../helpers/const";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export const authContext = createContext();
 export const useAuth = () => useContext(authContext);
@@ -12,6 +13,8 @@ const AuthContextProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
+  const notify = (message) =>
+    toast.error(message.toString(), { theme: "dark" });
 
   async function handleRegister(formData) {
     setLoading(true);
@@ -19,7 +22,17 @@ const AuthContextProvider = ({ children }) => {
       await axios.post(`${API}/accounts/register/`, formData);
       navigate("/");
     } catch (error) {
-      console.log(error);
+      if (error.response) {
+        if (error.response.data.detail) {
+          notify(error.response.data.detail);
+        } else {
+          for (let key in error.response.data) {
+            notify(`${key}: ${error.response.data[key]}`);
+          }
+        }
+      } else {
+        notify(error);
+      }
     } finally {
       setLoading(false);
     }
@@ -35,7 +48,17 @@ const AuthContextProvider = ({ children }) => {
       console.log(res);
       navigate("/");
     } catch (error) {
-      console.log(error);
+      if (error.response) {
+        if (error.response.data.detail) {
+          notify(error.response.data.detail);
+        } else {
+          for (let key in error.response.data) {
+            notify(`${key}: ${error.response.data[key]}`);
+          }
+        }
+      } else {
+        notify(error);
+      }
     } finally {
       setLoading(false);
     }
@@ -55,6 +78,7 @@ const AuthContextProvider = ({ children }) => {
       const res = await axios.post(`${API}/accounts/refresh/`, {
         refresh: tokens.refresh,
       });
+      console.log(res)
       localStorage.setItem(
         "tokens",
         JSON.stringify({ access: res.data.access, refresh: res.data.refresh })
@@ -62,7 +86,17 @@ const AuthContextProvider = ({ children }) => {
       const email = localStorage.getItem("email");
       setCurrentUser(email);
     } catch (error) {
-      console.log(error);
+      if (error.response) {
+        if (error.response.data.detail) {
+          notify(error.response.data.detail);
+        } else {
+          for (let key in error.response.data) {
+            notify(`${key}: ${error.response.data[key]}`);
+          }
+        }
+      } else {
+        notify(error);
+      }
       logout();
     } finally {
       setLoading(false);

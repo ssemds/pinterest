@@ -1,4 +1,4 @@
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Image } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -22,7 +22,7 @@ function BasicExample() {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <img src={logo} alt="" width={50} height={25} />
+        <Image src={logo} alt="" width="auto" height={25} />
         {/* <Navbar.Brand href="#home">Pinterest</Navbar.Brand> */}
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -50,7 +50,7 @@ function BasicExample() {
           </Form>
 
           <NavDropdown
-            title={<img src={profile} alt="" width={70} height={35} />}
+            title={<img src={profile} alt="" width="auto" height={35} />}
             id="basic-nav-dropdown"
             align="end"
             style={{ marginLeft: "10px" }}
