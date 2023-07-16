@@ -6,7 +6,6 @@ const Footer = () => {
       className="footer"
       style={{
         bottom: "0",
-        backgroundColor: "bisque",
         color: "#cbcbcb",
         height: "50px",
       }}

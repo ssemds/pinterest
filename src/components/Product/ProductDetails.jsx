@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import { productContext } from "../Contexts/ProductContextProvider";
+import { useParams } from "react-router-dom";
 
 const ProductDetails = () => {
-  return <div>ProductDetails</div>;
+  const { getOnePost, onePost } = useContext(productContext);
+  const { id } = useParams();
+  useEffect(() => {
+    getOnePost(id);
+  }, []);
+  return (
+    <div>
+      <div>
+        <p>{onePost.category_name}</p>
+      </div>
+    </div>
+  );
 };
 
 export default ProductDetails;

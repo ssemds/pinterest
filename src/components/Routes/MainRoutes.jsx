@@ -8,14 +8,14 @@ import EditProduct from "../Product/EditProduct";
 import AddProduct from "../Product/AddProduct";
 import ProductList from "../Product/ProductList";
 import ProductDetails from "../Product/ProductDetails";
+import HomePage from "../pages/HomePage";
 const MainRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<h1>Home Page</h1>} />
+      <Route path="/" element={<HomePage />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register-success" element={<RegisterSuccess />} />
-
       <Route path="/add" element={<AddProduct />} />
       <Route path="/products" element={<ProductList />} />
       <Route path="/products/:id" element={<ProductDetails />} />

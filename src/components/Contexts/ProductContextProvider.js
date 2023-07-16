@@ -13,6 +13,7 @@ const INIT_STATE = {
   //   pages: 0,
   categories: [],
   oneProduct: null,
+  onePost: {},
 };
 
 function reducer(state = INIT_STATE, action) {
