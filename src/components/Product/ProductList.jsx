@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useProduct } from "../Contexts/ProductContextProvider";
-import productCard from "./ProductCard";
 import ProductCard from "./ProductCard";
 
 const ProductList = () => {
